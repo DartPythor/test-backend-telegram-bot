@@ -9,7 +9,8 @@ import datetime
 class TaskAPITests(APITestCase):
     def setUp(self):
         self.user = CustomUser.objects.create(
-            telegram_id=123456789, password="testpass123",
+            telegram_id=123456789,
+            password="testpass123",
         )
 
         self.category = Categories.objects.create(user=self.user, name="Работа")
