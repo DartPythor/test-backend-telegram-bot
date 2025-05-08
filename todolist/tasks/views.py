@@ -28,10 +28,11 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
 class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Tasks.objects.all()
+    serializer_class = TaskSerializer
     lookup_field = "task_id"
 
 
-class CategoryCreateView(generics.ListCreateAPIView):
+class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Categories.objects.all()
     serializer_class = CategorySerializer
 
@@ -53,4 +54,5 @@ class CategoryCreateView(generics.ListCreateAPIView):
 
 class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Categories.objects.all()
+    serializer_class = CategorySerializer
     lookup_field = "category_id"
