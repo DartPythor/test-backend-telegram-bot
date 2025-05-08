@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -54,15 +55,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "todolist.wsgi.application"
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("POSTGRES_NAME", default="postgres"),
+#         "USER": env("POSTGRES_USER", default="postgres"),
+#         "PASSWORD": env("POSTGRES_PASSWORD", default="dAN732dhBCH"),
+#         "HOST": env("POSTGRES_HOST", cast=str, default="localhost"),
+#         "PORT": env("POSTGRES_PORT", cast=str, default="5432"),
+#     },
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_NAME", default="postgres"),
-        "USER": env("POSTGRES_USER", default="postgres"),
-        "PASSWORD": env("POSTGRES_PASSWORD", default="dAN732dhBCH"),
-        "HOST": env("POSTGRES_HOST", cast=str, default="localhost"),
-        "PORT": env("POSTGRES_PORT", cast=str, default="5432"),
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "America/Adak"
 
@@ -91,3 +99,6 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.CustomUser"
+
