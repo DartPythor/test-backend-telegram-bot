@@ -1,10 +1,17 @@
 from pathlib import Path
 
+import environ
+from dotenv import load_dotenv
+
+env = environ.Env()
+environ.Env.read_env()
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-404w206hqmsrr$%ohrat&8+)+pa(1%glg*ya8q3i33e4-e^l0j"
 
-DEBUG = True
+DEBUG = env("DEBUG", cast=bool, default=True)
 
 ALLOWED_HOSTS = []
 
@@ -49,9 +56,13 @@ WSGI_APPLICATION = "todolist.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_NAME", default="postgres"),
+        "USER": env("POSTGRES_USER", default="postgres"),
+        "PASSWORD": env("POSTGRES_PASSWORD", default="dAN732dhBCH"),
+        "HOST": env("POSTGRES_HOST", cast=str, default="localhost"),
+        "PORT": env("POSTGRES_PORT", cast=str, default="5432"),
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
