@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
+
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("telegram_id",)}),
@@ -9,5 +11,3 @@ class CustomUserAdmin(UserAdmin):
     )
     list_display = ("telegram_id", "is_staff")
     ordering = ("telegram_id",)
-
-admin.site.register(CustomUser, CustomUserAdmin)
