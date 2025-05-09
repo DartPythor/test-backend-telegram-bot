@@ -54,11 +54,21 @@ class ServiceAPI:
         response = await self._post(url, data)
         return type_objects.CustomUserResponse(**response)
 
-    async def create_task(self, task: type_objects.TaskCreate, telegram_id: int) -> type_objects.TaskResponse:
-        url = urljoin(self.base_url, f"tasks/api/v1/task/?telegram_id={telegram_id}")
+    async def create_task(
+        self, task: type_objects.TaskCreate
+    ) -> type_objects.TaskResponse:
+        url = urljoin(self.base_url, f"tasks/api/v1/task/")
         data = task.model_dump()
         response = await self._post(url, data)
         return type_objects.TaskResponse(**response)
+
+    async def create_category(
+        self, category: type_objects.CategoryCreate
+    ) -> type_objects.CategoryResponse:
+        url = urljoin(self.base_url, f"tasks/api/v1/category/")
+        data = category.model_dump()
+        response = await self._post(url, data)
+        return type_objects.CategoryResponse(**response)
 
     async def get_info_task(self, task_id: str) -> dict:
         ...
@@ -75,8 +85,11 @@ class ServiceAPI:
 
 async def main():
     service = ServiceAPI()
-    user = type_objects.CustomUserCreate(telegram_id=10025, username="massxs121", password="q2112122")
+    user = type_objects.CustomUserCreate(
+        telegram_id=10025, username="massxs121", password="q2112122"
+    )
     print(await service.create_user(user))
+
 
 if __name__ == "__main__":
     asyncio.run(main())
