@@ -15,3 +15,11 @@ async def on_confirm(callback: CallbackQuery, button: Button, dialog_manager: Di
     await service.create_category(category)
     await dialog_manager.done()
     await callback.message.answer("Тег создан!")
+
+
+async def on_confirm_delete(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+    service = ServiceAPI()
+    category_id = dialog_manager.dialog_data["category_id"]
+    await service.delete_category(category_id)
+    await dialog_manager.done()
+    await callback.message.answer("Тег удален!")
