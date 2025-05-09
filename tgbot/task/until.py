@@ -15,6 +15,6 @@ async def on_confirm(callback: CallbackQuery, button: Button, dialog_manager: Di
         tags=dialog_manager.dialog_data["tags"],
         user=callback.from_user.id,
     )
-    await service.create_task(task, callback.from_user.id)
+    await service.create_task(task)
     await dialog_manager.done()
     await callback.message.answer("Задача создана!")
