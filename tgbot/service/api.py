@@ -73,6 +73,12 @@ class ServiceAPI:
         response = await self._get(url, params)
         return response
 
+    async def delete_task(self, task_id: str) -> dict:
+        url = urljoin(self.base_url, f"tasks/api/v1/category/{task_id}/")
+        params = None
+        response = await self._delete(url, params)
+        return response
+
     async def create_category(
         self, category: type_objects.CategoryCreate
     ) -> type_objects.CategoryResponse:

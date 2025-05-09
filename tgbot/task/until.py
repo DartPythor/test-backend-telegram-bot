@@ -18,3 +18,11 @@ async def on_confirm(callback: CallbackQuery, button: Button, dialog_manager: Di
     await service.create_task(task)
     await dialog_manager.done()
     await callback.message.answer("Задача создана!")
+
+
+async def on_confirm_delete(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+    service = ServiceAPI()
+    task_id = dialog_manager.dialog_data["task_id"]
+    await service.delete_task(task_id)
+    await dialog_manager.done()
+    await callback.message.answer("Задача удалена!")

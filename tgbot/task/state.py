@@ -12,3 +12,9 @@ class TaskState(StatesGroup):
 class TaskListState(StatesGroup):
     list = State()
     page = State()
+
+
+class TaskDeleteState(StatesGroup):
+    delete = State()
+    confirm = State()
+    task_id = State()

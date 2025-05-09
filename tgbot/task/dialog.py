@@ -17,9 +17,11 @@ from tgbot.task.getters import (
     on_due_date_entered,
     get_task_data,
     task_getter,
+    on_id_entered,
+    get_task_data_delete,
 )
-from tgbot.task.state import TaskState, TaskListState
-from tgbot.task.until import on_confirm
+from tgbot.task.state import TaskState, TaskListState, TaskDeleteState
+from tgbot.task.until import on_confirm, on_confirm_delete
 
 
 def get_dialog_task() -> Dialog:
@@ -90,5 +92,28 @@ def get_tasks_dialog() -> Dialog:
             ),
             state=TaskListState.list,
             getter=task_getter,
+        ),
+    )
+
+
+def get_delete_tasks_dialog() -> Dialog:
+    return Dialog(
+        Window(
+            Const("✏️ Введите ID задачи:"),
+            MessageInput(on_id_entered),
+            Cancel(Const("❌ Отмена")),
+            state=TaskDeleteState.task_id,
+        ),
+        Window(
+            Format("✅ Подтвердите данные задачи:\n\n" "ID: {category_id}\n"),
+            Button(
+                Const("✔️ Удалить"),
+                id="confirm",
+                on_click=on_confirm_delete,
+            ),
+            Back(Const("◀️ Назад")),
+            Cancel(Const("❌ Отмена")),
+            state=TaskDeleteState.confirm,
+            getter=get_task_data_delete,
         ),
     )

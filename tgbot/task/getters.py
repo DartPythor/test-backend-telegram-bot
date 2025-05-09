@@ -71,3 +71,19 @@ async def task_getter(dialog_manager: DialogManager, **kwargs):
         "has_next": bool(response["next"]),
         "has_previous": bool(response["previous"]),
     }
+
+
+async def on_id_entered(
+    message: Message,
+    widget: MessageInput,
+    dialog_manager: DialogManager,
+):
+    dialog_manager.dialog_data["task_id"] = message.text
+    await dialog_manager.next()
+
+
+async def get_task_data_delete(dialog_manager: DialogManager, **kwargs):
+    data = dialog_manager.dialog_data
+    return {
+        "category_id": data.get("task_id", "не указано"),
+    }
