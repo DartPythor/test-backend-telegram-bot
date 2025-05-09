@@ -29,6 +29,17 @@ class TaskResponse(BaseModel):
     tags: list[str]
 
 
+class TaskDetailResponse(BaseModel):
+    task_id: str
+    user: int
+    title: str
+    due_date: datetime | None
+    tags: list[str]
+    description: str | None
+    completed: bool
+    created_at: datetime
+
+
 class CategoryCreate(BaseModel):
     name: str = Field(..., max_length=100)
     user: int

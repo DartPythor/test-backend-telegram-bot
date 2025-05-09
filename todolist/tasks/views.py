@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
 
-from tasks.serializers import CategorySerializer, TaskSerializer
+from tasks.serializers import CategorySerializer, TaskSerializer, TaskDetailSerializer
 from tasks.models import Categories, Tasks
 from users.models import CustomUser
 
@@ -18,7 +18,7 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
 class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Tasks.objects.all()
-    serializer_class = TaskSerializer
+    serializer_class = TaskDetailSerializer
     lookup_field = "task_id"
 
 
