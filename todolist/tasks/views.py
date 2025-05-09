@@ -11,8 +11,9 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     lookup_field = "task_id"
     pagination_class = PageNumberPagination
+
     def get_queryset(self):
-        return Tasks.objects.filter(user=self.request.data["user"])
+        return Tasks.objects.filter(user=self.request.query_params["user"])
 
 
 class TaskRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -28,7 +29,7 @@ class CategoryListCreateAPIView(generics.ListCreateAPIView):
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        return Categories.objects.filter(user=self.request.data["user"])
+        return Categories.objects.filter(user=self.request.query_params["user"])
 
 
 class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
