@@ -31,8 +31,8 @@ class TaskResponse(BaseModel):
 
 class CategoryCreate(BaseModel):
     name: str = Field(..., max_length=100)
-    user_id: int
+    user: int
 
 class CategoryResponse(CategoryCreate):
     category_id: str
-    created_at: datetime
+
