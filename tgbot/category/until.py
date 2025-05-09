@@ -1,0 +1,17 @@
+from aiogram.types import CallbackQuery
+from aiogram_dialog import DialogManager
+from aiogram_dialog.widgets.kbd import Button
+
+from tgbot.service.api import ServiceAPI
+from tgbot.service import type_objects
+
+
+async def on_confirm(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+    service = ServiceAPI()
+    category = type_objects.CategoryCreate(
+        user=callback.from_user.id,
+        name=dialog_manager.dialog_data["name"],
+    )
+    await service.create_category(category)
+    await dialog_manager.done()
+    await callback.message.answer("Тег создан!")
