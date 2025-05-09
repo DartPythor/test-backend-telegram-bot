@@ -8,3 +8,12 @@ task_menu = InlineKeyboardMarkup(
     ],
     resize_keyboard=True,
 )
+
+category_menu = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Мои теги", callback_data="category-list")],
+        [InlineKeyboardButton(text="Создать тег", callback_data="category-create")],
+        [InlineKeyboardButton(text="Удалить тег", callback_data="category-delete")],
+    ],
+    resize_keyboard=True,
+)
