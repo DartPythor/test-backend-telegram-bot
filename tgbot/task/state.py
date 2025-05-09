@@ -7,3 +7,8 @@ class TaskState(StatesGroup):
     due_date = State()
     tags = State()
     confirm = State()
+
+
+class TaskListState(StatesGroup):
+    list = State()
+    page = State()

@@ -4,6 +4,8 @@ from aiogram.types import Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 
+from tgbot.service.api import ServiceAPI
+
 
 async def on_title_entered(
     message: Message, widget: MessageInput, dialog_manager: DialogManager
@@ -53,4 +55,19 @@ async def get_task_data(dialog_manager: DialogManager, **kwargs):
         "description": data.get("description", "не указано"),
         "due_date": data.get("due_date_display", "не указано"),
         "tags": ", ".join(data.get("tags", [])) or "не указаны",
+    }
+
+
+async def task_getter(dialog_manager: DialogManager, **kwargs):
+    api_client = ServiceAPI()
+    page = dialog_manager.dialog_data.get("page", 1)
+    user_id = dialog_manager.event.from_user.id
+    response = await api_client.get_tasks(telegram_id=user_id, page=page)
+
+    return {
+        "categories": response["results"],
+        "current_page": page,
+        "total_pages": (response["count"] // 5) + 1,
+        "has_next": bool(response["next"]),
+        "has_previous": bool(response["previous"]),
     }

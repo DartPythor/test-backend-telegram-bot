@@ -3,7 +3,7 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, StartMode
 
-from tgbot.task.state import TaskState
+from tgbot.task.state import TaskState, TaskListState
 from tgbot.keyboard.task_menu import task_menu
 
 router = Router()
@@ -13,7 +13,12 @@ async def start_task_create(callback: CallbackQuery, dialog_manager: DialogManag
     await dialog_manager.start(TaskState.title, mode=StartMode.RESET_STACK)
 
 
-@router.message(F.text == "Заметки")
+@router.callback_query(F.data == "task-list")
+async def start_task_create(callback: CallbackQuery, dialog_manager: DialogManager):
+    await dialog_manager.start(TaskListState.list, mode=StartMode.RESET_STACK)
+
+
+@router.message(F.text == "Задачи")
 async def show_task_menu(message: Message, dialog_manager: DialogManager):
     await message.answer(
         "Меню задач:",

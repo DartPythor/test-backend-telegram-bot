@@ -64,6 +64,15 @@ class ServiceAPI:
         response = await self._post(url, data)
         return type_objects.TaskResponse(**response)
 
+    async def get_tasks(self, telegram_id: int, page: int = 1) -> dict:
+        url = urljoin(self.base_url, f"tasks/api/v1/task/")
+        params = {
+            "user": telegram_id,
+            "page": page,
+        }
+        response = await self._get(url, params)
+        return response
+
     async def create_category(
         self, category: type_objects.CategoryCreate
     ) -> type_objects.CategoryResponse:
