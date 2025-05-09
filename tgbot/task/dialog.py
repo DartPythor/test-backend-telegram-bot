@@ -19,6 +19,8 @@ from tgbot.task.getters import (
     task_getter,
     on_id_entered,
     get_task_data_delete,
+    detail_getter,
+on_task_selected,
 )
 from tgbot.task.state import TaskState, TaskListState, TaskDeleteState
 from tgbot.task.until import on_confirm, on_confirm_delete
@@ -84,7 +86,7 @@ def get_tasks_dialog() -> Dialog:
                     id="category_sel",
                     item_id_getter=lambda item: item["task_id"],
                     items="categories",
-                    on_click=task_getter,
+                    on_click=on_task_selected,
                 ),
                 id="scroll_category",
                 width=1,
@@ -92,6 +94,24 @@ def get_tasks_dialog() -> Dialog:
             ),
             state=TaskListState.list,
             getter=task_getter,
+        ),
+        Window(
+            Format(
+                "📌 Задача: {title}\n\n"
+                "📝 Описание: {description}\n"
+                "🕒 Создана: {created_at}\n"
+                "⏰ Срок выполнения: {due_date}\n"
+                "Теги: {tags}\n"
+                "Выполнена: {completed}\n"
+                "ID: {id}\n"
+            ),
+            Button(
+                Const("↩️ Назад"),
+                id="back_btn",
+                on_click=Back(),
+            ),
+            state=TaskListState.detail,
+            getter=detail_getter,
         ),
     )
 

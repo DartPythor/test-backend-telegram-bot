@@ -14,6 +14,20 @@ class TaskSerializer(serializers.ModelSerializer):
             "user",
         )
 
+class TaskDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tasks
+        fields = (
+            "task_id",
+            "title",
+            "due_date",
+            "tags",
+            "user",
+            "description",
+            "completed",
+            "created_at",
+        )
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

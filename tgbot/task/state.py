@@ -12,6 +12,7 @@ class TaskState(StatesGroup):
 class TaskListState(StatesGroup):
     list = State()
     page = State()
+    detail = State()
 
 
 class TaskDeleteState(StatesGroup):

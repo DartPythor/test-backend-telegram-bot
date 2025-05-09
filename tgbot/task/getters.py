@@ -1,10 +1,11 @@
 from datetime import datetime
 
-from aiogram.types import Message
+from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 
 from tgbot.service.api import ServiceAPI
+from tgbot.task.state import TaskListState
 
 
 async def on_title_entered(
@@ -87,3 +88,27 @@ async def get_task_data_delete(dialog_manager: DialogManager, **kwargs):
     return {
         "category_id": data.get("task_id", "не указано"),
     }
+
+async def detail_getter(dialog_manager: DialogManager, **kwargs):
+    task_id = dialog_manager.dialog_data["task_id"]
+    service = ServiceAPI()
+    task = await service.detail_task(task_id)
+    return {
+        "title": task.title,
+        "created_at": task.created_at.strftime("%d.%m.%Y %H:%M"),
+        "due_date": task.due_date.strftime("%d.%m.%Y %H:%M"),
+        "description": task.description,
+        "id": task.task_id,
+        "tags": ", ".join(task.tags),
+        "completed": task.completed,
+    }
+
+
+async def on_task_selected(
+    callback: CallbackQuery,
+    widget,
+    manager: DialogManager,
+    item_id: str,
+):
+    manager.dialog_data["task_id"] = item_id
+    await manager.switch_to(TaskListState.detail)
