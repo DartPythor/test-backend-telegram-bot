@@ -11,6 +11,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "title",
             "due_date",
             "tags",
+            "user",
         )
 
 
@@ -20,4 +21,5 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = (
             "category_id",
             "name",
+            "user",
         )
