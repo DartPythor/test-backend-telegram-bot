@@ -14,7 +14,6 @@ class ServiceAPI:
 
     def __init__(self):
         logger.debug("Инициализация ServiceAPI")
-        self.session = aiohttp.ClientSession()
         logger.info(f"Создан клиент API")
 
     async def close(self):
@@ -24,27 +23,30 @@ class ServiceAPI:
 
     async def _post(self, url, data) -> dict:
         logger.debug(f"POST запрос к {url} с данными: {data}")
-        async with self.session.post(url, data=data) as response:
-            response.raise_for_status()
-            data = await response.json()
-            logger.debug(f"Успешный POST ответ от {url}")
-            return data
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, data=data) as response:
+                response.raise_for_status()
+                data = await response.json()
+                logger.debug(f"Успешный POST ответ от {url}")
+                print(data)
+                return data
 
     async def _get(self, url, data) -> dict:
         logger.debug(f"GET запрос к {url} с параметрами: {data}")
-        async with self.session.get(url, params=data) as response:
-            response.raise_for_status()
-            data = await response.json()
-            logger.debug(f"Успешный GET ответ от {url}")
-            return data
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params=data) as response:
+                response.raise_for_status()
+                data = await response.json()
+                logger.debug(f"Успешный GET ответ от {url}")
+                return data
 
     async def _delete(self, url, data) -> dict:
         logger.debug(f"DELETE запрос к {url} с параметрами: {data}")
-        async with self.session.delete(url, data=data) as response:
-            response.raise_for_status()
-            data = await response.json()
-            logger.debug(f"Успешный GET ответ от {url}")
-            return data
+        async with aiohttp.ClientSession() as session:
+            async with session.delete(url, params=data) as response:
+                response.raise_for_status()
+                logger.debug(f"Успешный DELETE ответ от {url}")
+                return data
 
     async def create_user(
         self, user: type_objects.CustomUserCreate
@@ -70,25 +72,32 @@ class ServiceAPI:
         response = await self._post(url, data)
         return type_objects.CategoryResponse(**response)
 
-    async def get_info_task(self, task_id: str) -> dict:
-        ...
-
-    async def delete_task(self, task_id: str) -> dict:
-        ...
-
-    async def create_category(self, telegram_id: int) -> dict:
-        ...
+    async def get_categories(self, telegram_id: int, page: int = 1) -> dict:
+        url = urljoin(self.base_url, f"tasks/api/v1/category/")
+        params = {
+            "user": telegram_id,
+            "page": page,
+        }
+        response = await self._get(url, params)
+        return response
 
     async def delete_category(self, category_id: str) -> dict:
-        ...
+        url = urljoin(self.base_url, f"tasks/api/v1/category/{category_id}/")
+        params = None
+        response = await self._delete(url, params)
+        return response
 
 
 async def main():
     service = ServiceAPI()
-    user = type_objects.CustomUserCreate(
-        telegram_id=10025, username="massxs121", password="q2112122"
+    # user = type_objects.CustomUserCreate(
+    #     telegram_id=10025, username="massxs121", password="q2112122"
+    # )
+    category = type_objects.CategoryCreate(
+        user=1111,
+        name="123",
     )
-    print(await service.create_user(user))
+    print(await service.create_category(category))
 
 
 if __name__ == "__main__":
