@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceAPI:
-    base_url = "http://localhost:8000"
+    base_url = "http://web:8000"
 
     def __init__(self):
         logger.debug("Инициализация ServiceAPI")

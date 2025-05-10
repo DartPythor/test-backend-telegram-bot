@@ -16,12 +16,13 @@ def send_notification():
         is_send_deadline=False,
         due_date__gt=timezone.now(),
     )
-    data_send = [
-        {"title": task.title, "telegram_id": task.user.telegram_id} for task in tasks
-    ]
-    tasks.update(is_send_deadline=True)
-    data_send = json.dumps(data_send)
-    requests.post(
-        urljoin(TGBOT_HOST, "api/data"),
-        data=data_send,
-    )
+    if tasks:
+        data_send = [
+            {"title": task.title, "telegram_id": task.user.telegram_id} for task in tasks
+        ]
+        tasks.update(is_send_deadline=True)
+        data_send = json.dumps(data_send)
+        requests.post(
+            urljoin(TGBOT_HOST, "api/data"),
+            data=data_send,
+        )

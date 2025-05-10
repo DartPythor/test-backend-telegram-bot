@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-404w206hqmsrr$%ohrat&8+)+pa(1%glg*ya8q3i33e4-e^l0j
 
 DEBUG = env("DEBUG", cast=bool, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "rest_framework",
@@ -117,4 +117,4 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-TGBOT_HOST = env("TGBOT_HOST", default="")
+TGBOT_HOST = env("TGBOT_HOST", default="http://bot:9000")

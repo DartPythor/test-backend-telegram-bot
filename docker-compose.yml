@@ -1,0 +1,90 @@
+version: '3.8'
+
+networks:
+  app_network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+
+  redis:
+    image: redis:7.0-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python todolist/manage.py migrate &&
+             python todolist/manage.py runserver 0.0.0.0:8000"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+    networks:
+      - app_network
+
+  celery:
+    build: .
+    command: >
+      sh -c "export PYTHONPATH=/app && 
+             celery -A todolist.celery worker --loglevel=info"
+    working_dir: /app/todolist
+    environment:
+      DJANGO_SETTINGS_MODULE: todolist.settings
+      PYTHONPATH: /app
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    depends_on:
+      - postgres
+      - web
+    networks:
+      - app_network
+
+  celery-beat:
+    build: .
+    command: >
+        sh -c "export PYTHONPATH=/app && 
+               celery -A todolist.celery beat --loglevel=info"
+    working_dir: /app/todolist
+    environment:
+      DJANGO_SETTINGS_MODULE: todolist.settings
+      PYTHONPATH: /app
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    depends_on:
+      - postgres
+      - web
+    networks:
+      - app_network
+
+  bot:
+    build: .
+    command: python tgbot/bot.py
+    ports:
+      - "9000:9000"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    depends_on:
+      - postgres
+      - web
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
