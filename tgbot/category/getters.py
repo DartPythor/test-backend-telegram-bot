@@ -3,8 +3,8 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.input import MessageInput
 
-from tgbot.service.api import ServiceAPI
-from tgbot.category.state import CategoryListState
+from service.api import ServiceAPI
+from category.state import CategoryListState
 
 async def on_name_entered(
     message: Message,

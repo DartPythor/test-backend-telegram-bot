@@ -3,10 +3,10 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-from tgbot.keyboard.reply_menu import main_menu
-from tgbot.lexicon.commands_texts import CommandTexts
-from tgbot.service.api import ServiceAPI
-from tgbot.service.type_objects import CustomUserCreate
+from keyboard.reply_menu import main_menu
+from lexicon.commands_texts import CommandTexts
+from service.api import ServiceAPI
+from service.type_objects import CustomUserCreate
 
 router = Router()
 

@@ -6,17 +6,17 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram_dialog import setup_dialogs
 from aiohttp import web
 
-from tgbot.config import TOKEN_BOT
-from tgbot.handlers.start import router as cmd_router
-from tgbot.task.handlers import router as task_router
-from tgbot.category.handlers import router as category_router
-from tgbot.task.dialog import get_dialog_task, get_tasks_dialog, get_delete_tasks_dialog
-from tgbot.category.dialog import (
+from config import TOKEN_BOT
+from handlers.start import router as cmd_router
+from task.handlers import router as task_router
+from category.handlers import router as category_router
+from task.dialog import get_dialog_task, get_tasks_dialog, get_delete_tasks_dialog
+from category.dialog import (
     get_dialog_category,
     get_categories_dialog,
     get_delete_categories_dialog,
 )
-from tgbot.notification.aiohttp_server import handle_request
+from notification.aiohttp_server import handle_request
 
 
 async def start_aiohttp(app):

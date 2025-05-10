@@ -19,8 +19,9 @@ def send_notification():
     data_send = [
         {"title": task.title, "telegram_id": task.user.telegram_id} for task in tasks
     ]
+    tasks.update(is_send_deadline=True)
     data_send = json.dumps(data_send)
-    response = requests.post(
+    requests.post(
         urljoin(TGBOT_HOST, "api/data"),
         data=data_send,
     )

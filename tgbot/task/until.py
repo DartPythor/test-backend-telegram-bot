@@ -2,8 +2,8 @@ from aiogram.types import CallbackQuery
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.kbd import Button
 
-from tgbot.service.api import ServiceAPI
-from tgbot.service import type_objects
+from service.api import ServiceAPI
+from service import type_objects
 
 
 async def on_confirm(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):

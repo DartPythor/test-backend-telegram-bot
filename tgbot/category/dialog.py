@@ -10,7 +10,7 @@ from aiogram_dialog.widgets.kbd import (
 )
 
 
-from tgbot.category.getters import (
+from category.getters import (
     detail_getter,
     on_name_entered,
     get_category_data,
@@ -19,8 +19,8 @@ from tgbot.category.getters import (
     category_getter,
     on_category_selected,
 )
-from tgbot.category.state import CategoryState, CategoryListState, CategoryDeleteState
-from tgbot.category.until import on_confirm, on_confirm_delete
+from category.state import CategoryState, CategoryListState, CategoryDeleteState
+from category.until import on_confirm, on_confirm_delete
 
 
 def get_dialog_category() -> Dialog:

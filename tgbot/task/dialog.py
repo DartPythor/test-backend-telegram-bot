@@ -10,7 +10,7 @@ from aiogram_dialog.widgets.kbd import (
 )
 
 
-from tgbot.task.getters import (
+from task.getters import (
     on_title_entered,
     on_tags_entered,
     on_description_entered,
@@ -22,8 +22,8 @@ from tgbot.task.getters import (
     detail_getter,
 on_task_selected,
 )
-from tgbot.task.state import TaskState, TaskListState, TaskDeleteState
-from tgbot.task.until import on_confirm, on_confirm_delete
+from task.state import TaskState, TaskListState, TaskDeleteState
+from task.until import on_confirm, on_confirm_delete
 
 
 def get_dialog_task() -> Dialog:

@@ -3,8 +3,8 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager, StartMode
 
-from tgbot.category.state import CategoryState, CategoryListState, CategoryDeleteState
-from tgbot.keyboard.task_menu import category_menu
+from category.state import CategoryState, CategoryListState, CategoryDeleteState
+from keyboard.task_menu import category_menu
 
 router = Router()
 

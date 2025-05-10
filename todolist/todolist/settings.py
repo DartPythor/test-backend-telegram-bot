@@ -57,23 +57,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "todolist.wsgi.application"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": env("POSTGRES_NAME", default="postgres"),
-#         "USER": env("POSTGRES_USER", default="postgres"),
-#         "PASSWORD": env("POSTGRES_PASSWORD", default="dAN732dhBCH"),
-#         "HOST": env("POSTGRES_HOST", cast=str, default="localhost"),
-#         "PORT": env("POSTGRES_PORT", cast=str, default="5432"),
-#     },
-# }
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_NAME", default="mydb"),
+        "USER": env("POSTGRES_USER", default="myuser"),
+        "PASSWORD": env("POSTGRES_PASSWORD", default="mypassword"),
+        "HOST": env("POSTGRES_HOST", cast=str, default="postgres"),
+        "PORT": env("POSTGRES_PORT", cast=str, default="5432"),
+    },
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

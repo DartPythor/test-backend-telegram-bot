@@ -4,8 +4,8 @@ from aiogram.types import CallbackQuery, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 
-from tgbot.service.api import ServiceAPI
-from tgbot.task.state import TaskListState
+from service.api import ServiceAPI
+from task.state import TaskListState
 
 
 async def on_title_entered(

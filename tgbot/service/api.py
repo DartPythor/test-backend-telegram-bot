@@ -4,7 +4,7 @@ import logging
 from urllib.parse import urljoin
 
 
-import tgbot.service.type_objects as type_objects
+import service.type_objects as type_objects
 
 logger = logging.getLogger(__name__)
 
