@@ -108,3 +108,19 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.CustomUser"
+
+CELERY_BROKER_URL = (
+    f"redis://{env('REDIS_HOST', cast=str, default='redis')}:6379/0"
+)
+CELERY_RESULT_BACKEND = (
+    f"redis://{env('REDIS_HOST', cast=str, default='redis')}:6379/0"
+)
+
+CELERY_BEAT_SCHEDULE = {
+    "send_notification": {
+        "task": "tasks.tasks.send_notification",
+        "schedule": 10,
+    },
+}
+
+TGBOT_HOST = env("TGBOT_HOST", default="")
