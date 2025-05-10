@@ -46,6 +46,7 @@ class Tasks(models.Model):
     completed = models.BooleanField(default=False)
     tags = models.ManyToManyField("Categories")
     created_at = models.DateTimeField(auto_now_add=True)
+    is_send_deadline = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.task_id:
