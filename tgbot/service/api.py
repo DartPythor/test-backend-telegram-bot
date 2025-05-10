@@ -85,6 +85,12 @@ class ServiceAPI:
         response = await self._get(url, params)
         return type_objects.TaskDetailResponse(**response)
 
+    async def detail_category(self, category_id: str) -> type_objects.CategoryDetail:
+        url = urljoin(self.base_url, f"tasks/api/v1/category/{category_id}/")
+        params = None
+        response = await self._get(url, params)
+        return type_objects.CategoryDetail(**response)
+
     async def create_category(
         self, category: type_objects.CategoryCreate
     ) -> type_objects.CategoryResponse:

@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.input import MessageInput
 
 from tgbot.service.api import ServiceAPI
-
+from tgbot.category.state import CategoryListState
 
 async def on_name_entered(
     message: Message,
@@ -52,14 +52,21 @@ async def category_getter(dialog_manager: DialogManager, **kwargs):
         "has_previous": bool(response["previous"]),
     }
 
+async def on_category_selected(
+    callback: CallbackQuery,
+    widget,
+    manager: DialogManager,
+    item_id: str,
+):
+    manager.dialog_data["category_id"] = item_id
+    await manager.switch_to(CategoryListState.detail)
 
-async def on_prev_page(callback: CallbackQuery, button: Button, manager: DialogManager):
-    current_page = manager.dialog_data.get("page", 1)
-    manager.dialog_data["page"] = max(1, current_page - 1)
-    await manager.show()
 
-async def on_next_page(callback: CallbackQuery, button: Button, manager: DialogManager):
-    current_page = manager.dialog_data.get("page", 1)
-    total_pages = (manager.dialog_data.get("total_items", 0) // 5) + 1
-    manager.dialog_data["page"] = min(total_pages, current_page + 1)
-    await manager.show()
+async def detail_getter(dialog_manager: DialogManager, **kwargs):
+    category_id = dialog_manager.dialog_data["category_id"]
+    service = ServiceAPI()
+    category = await service.detail_category(category_id)
+    return {
+        "title": category.name,
+        "id": category.category_id,
+    }

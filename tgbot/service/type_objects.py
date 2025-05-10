@@ -47,3 +47,8 @@ class CategoryCreate(BaseModel):
 class CategoryResponse(CategoryCreate):
     category_id: str
 
+
+class CategoryDetail(BaseModel):
+    name: str = Field(..., max_length=100)
+    user: int
+    category_id: str

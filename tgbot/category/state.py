@@ -9,6 +9,7 @@ class CategoryState(StatesGroup):
 class CategoryListState(StatesGroup):
     list = State()
     page = State()
+    detail = State()
 
 
 class CategoryDeleteState(StatesGroup):
